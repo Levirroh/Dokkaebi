@@ -44,3 +44,16 @@ This roadmap focuses on general utility, cybersecurity, and quality of life.
 git clone [still not ready])
 
 # Follow the setup guides in the /docs folder for Termux configuration
+```
+
+
+## Install:
+front:
+```npm install styled-components lucide-react axios ```
+
+back:
+```pip install fastapi uvicorn python-dotenv```
+
+termux:
+```pkg install termux-api```
+
