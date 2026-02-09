@@ -1,4 +1,4 @@
-# 📱 Android Gateway Central (AGC)
+# 📱 Dokkaebi
 
 A self-hosted automation server and command gateway designed to breathe new life into old Android devices. This project leverages the **Termux** environment to transform idle hardware into a secure, extensible remote control hub.
 
@@ -36,9 +36,7 @@ This roadmap focuses on general utility, cybersecurity, and quality of life.
 ## 🚀 Getting Started (Coming Soon)
 
 ### Prerequisites
-- Android device with [Termux](https://f-droid.org/packages/com.termux/) installed (F-Droid version recommended).
-- Python 3.10+
-- Node.js & NPM
+- Unknown
 
 ### Basic Setup
 ```bash
