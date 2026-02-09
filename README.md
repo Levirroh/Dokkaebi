@@ -41,6 +41,6 @@ This roadmap focuses on general utility, cybersecurity, and quality of life.
 ### Basic Setup
 ```bash
 # Clone the repository
-git clone [https://github.com/Levirroh/android-gateway-central.git](https://github.com/Levirroh/android-gateway-central.git)
+git clone [still not ready])
 
 # Follow the setup guides in the /docs folder for Termux configuration
