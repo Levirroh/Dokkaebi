@@ -1,0 +1,63 @@
+1. SETUP DO PC (Frontend - Expo)
+Node.js: Baixe e instale a versão LTS em nodejs.org.
+
+Terminal:
+
+Bash
+# Criar o app
+npx create-expo-app@latest dokkaebi-app --template blank
+cd dokkaebi-app
+
+# Instalar libs
+
+npm install styled-components axios lucide-react-native expo-network expo-location expo-constants
+
+npm install --save-dev babel-plugin-styled-components
+
+Ajuste no VS Code: No arquivo babel.config.js, adicione: 
+
+plugins: ['babel-plugin-styled-components'],
+
+📱 2. SETUP DO CELULAR ANTIGO (Backend - Termux)
+No Termux:
+
+Bash
+# Primeiro o ambiente
+pkg update && pkg upgrade
+pkg install python termux-api build-essential
+
+# Depois as libs do Python
+install -r App/requirements.txt
+
+🌐 3. SETUP DE CONEXÃO E APPS
+No Celular Atual (Seu): Instalar Expo Go e Tailscale.
+
+No Celular Antigo (Servidor): Instalar Tailscale e Termux:API (App da Play Store).
+
+No PC: Instalar Tailscale para Windows.
+
+
+# obs:
+
+# UPGRADE: SISTEMA MULTI-AGENTE
+1. No Frontend: Criar um estado (useState) para armazenar o 'currentAgentIP'.
+2. No Frontend: Instalar o AsyncStorage para salvar os IPs:
+   npx expo install @react-native-async-storage/async-storage
+3. No Backend: Manter o código IDÊNTICO em todos os celulares servidores. 
+   O que muda é apenas o IP que cada um vai receber do Tailscale.
+
+
+
+
+[ ] PC: Instalar Node.js LTS (nodejs.org)
+[ ] PC: Instalar Tailscale e logar
+[ ] PC: VS Code + Extensão Python e React Native Tools
+
+[ ] CELULAR ATUAL: Instalar Expo Go
+[ ] CELULAR ATUAL: Instalar Tailscale e logar
+
+[ ] AGENTES/HUB: Instalar Termux
+[ ] AGENTES/HUB: Instalar Termux:API (App na Play Store)
+[ ] AGENTES/HUB: No Termux: rodar 'pkg install termux-api'
+[ ] AGENTES/HUB: No Termux: rodar 'termux-setup-storage'
+[ ] AGENTES/HUB: Ativar 'Acquire Wake Lock' na notificação
