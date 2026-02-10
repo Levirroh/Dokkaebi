@@ -66,3 +66,49 @@ O projeto deixa de ser um "app simples" para se tornar um sistema **Hub & Spoke*
 * **Modularidade:** Se um agente cair, o sistema continua funcionando para os outros.
 * **Segurança:** Toda a comunicação é interna à VPN do Tailscale.
 * **Escalabilidade:** Para adicionar um novo cômodo na automação, basta um celular velho e um `git pull`.
+
+
+
+
+
+# ESPAÇO DE IDEIAS:
+
+🛡️ 1. Camada de Acesso e Segurança
+Autenticação Biométrica: Tela inicial que exige face/digital para liberar o acesso aos Agentes.
+
+Status do Tailscale: Um pequeno indicador (led verde/vermelho) mostrando se o seu celular está conectado à rede privada.
+
+Scan: Pequenos comandos rápidos usando um botão para ver dispositivos na rede e similares.
+
+📡 2. Gestão de Frota (Fleet Control)
+Seletor de Agentes: Uma lista (ou grid) com todos os seus celulares cadastrados.
+
+Dashboard de Saúde: Visualização rápida de cada Agente:
+
+- Nível de bateria e se está carregando.
+
+- Temperatura do dispositivo (importante para celulares que ficam 24h na tomada).
+
+- Status "Online/Offline" (Heartbeat).
+
+Cadastro de Novo Agente: Botão para ler um QR Code ou digitar o IP de um novo celular que você acabou de configurar com o Termux.
+
+🕹️ 3. Comandos de Execução (Action Center)
+Aqui é onde você envia as ordens para o Agente selecionado:
+
+Wake-on-LAN: Botão para ligar seu PC remotamente (enviando o sinal pelo Agente de casa).
+
+Comandos de Shell: Um campo para digitar um comando rápido de terminal e ver a resposta do Agente.
+
+Modo Vigilância: Ativar a câmera do Agente e tirar uma foto (ou iniciar stream) para ver como está o ambiente.
+
+Broadcast de Voz: Digitar um texto no seu celular e fazer o Agent falar (usando o comando termux-tts-speak).
+
+📊 4. Visão do Hub (Insights & Histórico)
+Esta parte consome os dados do Dokkaebi-Db:
+
+Linha do Tempo (Logs): Lista de tudo o que aconteceu ("PC ligado às 08h", "Agente Trabalho desconectado às 15h").
+
+Gráficos de Telemetria: Gráfico de estabilidade da bateria ou sinal Wi-Fi dos agentes ao longo do dia.
+
+Notificações Críticas: Configuração de alertas (ex: "Me avise se o Agente Casa chegar em 10% de bateria").
