@@ -47,6 +47,12 @@ No PC: Instalar Tailscale para Windows.
    O que muda é apenas o IP que cada um vai receber do Tailscale.
 
 
+expo-network (Para pegar informações básicas do Wi-Fi).
+
+react-native-lan-port-scanner (Se quiser algo pronto para varrer IPs).
+
+react-native-ping (Para testar a velocidade com os Agentes).
+
 
 
 [ ] PC: Instalar Node.js LTS (nodejs.org)
@@ -61,3 +67,25 @@ No PC: Instalar Tailscale para Windows.
 [ ] AGENTES/HUB: No Termux: rodar 'pkg install termux-api'
 [ ] AGENTES/HUB: No Termux: rodar 'termux-setup-storage'
 [ ] AGENTES/HUB: Ativar 'Acquire Wake Lock' na notificação
+
+[ ] Criar Lazy Loading para a aba de Ferramentas (não carregar no boot).
+[ ] Implementar botão de 'Stop' automático após 30s de escaneamento.
+[ ] Adicionar verificação: "Só permitir Scan se estiver no Wi-Fi" (opcional para economizar plano de dados).
+
+[ ] Criar variável global 'SISTEMA_BLOQUEADO' no Hub.
+[ ] Implementar Header customizado 'X-Biometric-Auth' no React Native.
+[ ] Criar endpoint '/lockdown' em todos os Dokkaebis.
+
+Banco de Dados:
+
+[ ] Criar a tabela notificacoes (global).
+
+[ ] Criar a tabela config_dispositivos (onde guardamos o que cada um pode fazer).
+
+Lógica de Check-in (Schedule):
+
+[ ] Implementar o schedule às 00h e 12h para o Agente se reportar ao banco.
+
+Front-end (React Native):
+
+[ ] Criar um "HOC" (High Order Component) ou um Hook chamado usePermissions que esconde botões baseados no ID do celular.
