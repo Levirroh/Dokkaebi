@@ -1,0 +1,10 @@
+# Web Server
+fastapi==0.109.0
+uvicorn==0.27.0
+
+# Environment & Logic
+python-dotenv==1.0.1
+requests==2.31.0
+
+# Hardware interaction (Termux helper)
+# Note: termux-api should also be installed via 'pkg install termux-api'
