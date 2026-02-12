@@ -57,3 +57,9 @@ back:
 termux:
 ```pkg install termux-api```
 
+
+# Explanations:
+
+1. why v1 and v2 folders?
+  basicaly: I am going to use phones for the backend and I want to be able to git push and pull from afar. So, if that doesn't work, I will be able to just change the route from, v2 to v1, returning to the older version, or the stable version.
+
