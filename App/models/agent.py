@@ -7,6 +7,7 @@ class Agent(Base):
     nome_agente = Column(String)
     ip_local = Column(String)
     id_hardware = Column(String, unique=True)
+    batery = Column(Integer)
     status_atual = Column(String) # Online, Offline, Alerta, Lockdown
     ultima_conexao = Column(DateTime)
 
