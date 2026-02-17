@@ -1,6 +1,6 @@
 from datetime import datetime
 from sqlalchemy import Column, DateTime, Integer, String, Boolean, ForeignKey
-from database.base_class import Base
+from App.database.base_class import Base
 
 class Agent(Base):
     id_agente = Column(String, primary_key=True)

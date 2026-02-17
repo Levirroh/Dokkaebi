@@ -1,11 +1,11 @@
 from datetime import datetime
 from typing import Annotated
 from fastapi import APIRouter, Body, Depends, FastAPI, HTTPException, Header
-from pydantic import BaseModel
 import jwt
+from pydantic import BaseModel
 
 from App.database.session import get_db
-from App.models.agent import Agent
+from App.models.agent_model import Agent
 
 key = "#acegik!*"
 
@@ -27,7 +27,7 @@ async def heartbeat(req: Annotated[Check | None, Body()], header: Annotated[str 
   try:
     agent = jwt.decode(header, key, algorithms=["HS256"])
     
-    db_agent = session.query(Agent).filter(Agent.id == agent.get("id")).first()
+    db_agent = session.select(Agent).where(Agent.id == agent["id"]).first()
     
     if(db_agent != None):
         db_agent.batery = req.batery

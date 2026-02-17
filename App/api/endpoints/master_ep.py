@@ -5,7 +5,7 @@ from pydantic import BaseModel
 import jwt
 
 from App.database.session import get_db
-from App.models.agent import Agent
+from App.models.agent_model import Agent
 
 key = "#LMAZpoqiwe098123"
 

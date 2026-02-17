@@ -3,8 +3,8 @@
 #region tables
 
 from database.base_class import Base
-from models.user import *
-from models.agent import *
-from models.system import * 
+from App.models.user_model import *
+from App.models.agent_model import *
+from App.models.system_model import * 
 
 #endregion

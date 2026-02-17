@@ -1,11 +1,8 @@
-from datetime import datetime
 from typing import Annotated
-from fastapi import APIRouter, Body, Depends, FastAPI, HTTPException, Header
+from fastapi import APIRouter, Body, Depends, FastAPI, Header
 from pydantic import BaseModel
-import jwt
 
 from App.database.session import get_db
-from App.models.agent import Agent
 
 key = "#LMAZpoqiwe"
 

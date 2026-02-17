@@ -1,6 +1,6 @@
 from sqlalchemy import Boolean, Column, Integer, String, DateTime, ForeignKey, Text
 from datetime import datetime
-from database.base_class import Base
+from App.database.base_class import Base
 
 class Command(Base):
     id_comando = Column(Integer, primary_key=True)
