@@ -1,6 +1,8 @@
 from typing import Annotated
 from fastapi import APIRouter, Body, Depends, FastAPI, Header
 from pydantic import BaseModel
+import subprocess
+
 
 from App.database.session import get_db
 
@@ -16,21 +18,40 @@ router = APIRouter(
 class Check(BaseModel):
     token_dokka: str # dokka id already inside dokka token
 
+class Phone(BaseModel):
+    model: str
+    android_version: str
+    battery: int
+    notifications: list[str]
+
 
 app = FastAPI()
 
 @app.post("/send_heartbeat/")
-async def heartsend_heartbeatbeat(req: Annotated[Check | None, Body()], header: Annotated[str | None, Header()] = None, session = Depends(get_db)):
+async def heartsend_heartbeatbeat(session = Depends(get_db)):
   
-  return True
+  phone = Phone(
+    model=subprocess.check_output(['termux-battery-status']).decode('utf-8'),
+    android_version=subprocess.run(
+            ['getprop', 'ro.product.model'],
+            check=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True
+        ),
+    battery=subprocess.check_output(['termux-battery-status']).decode('utf-8'),
+    notifications=[]
+  )
+
+  return phone
 
 @app.post("/status/")
-async def status(req: Annotated[Check | None, Body()], header: Annotated[str | None, Header()] = None, session = Depends(get_db)):
+async def status(session = Depends(get_db)):
   
   return True
 
 @app.post("/photo/")
-async def photo(req: Annotated[Check | None, Body()], header: Annotated[str | None, Header()] = None, session = Depends(get_db)):
+async def photo(session = Depends(get_db)):
   
   return True
 
