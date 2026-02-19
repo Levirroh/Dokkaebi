@@ -6,6 +6,7 @@ from pydantic import BaseModel
 
 from App.database.session import get_db
 from App.models.agent_model import Agent
+from App.models.system_model import Log
 
 key = "#acegik!*"
 
@@ -46,7 +47,15 @@ async def heartbeat(req: Annotated[Check | None, Body()], header: Annotated[str 
 
 @app.post("/logs/")
 async def logs(req: Annotated[Check | None, Body()], header: Annotated[str | None, Header()] = None, session = Depends(get_db)):
-  return True
+  try:
+    jwt.decode(header, key, algorithms=["HS256"])
+    
+    logs = session.select(Log).all()
+    
+    return logs
+    
+  except jwt.exceptions.InvalidTokenError:
+    raise HTTPException(status_code=401, detail="ERRO: Token Inválido ou Expirado.")
 
 
 @app.post("/agents/:id")
