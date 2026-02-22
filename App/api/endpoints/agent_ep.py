@@ -1,5 +1,5 @@
 from typing import Annotated
-from fastapi import APIRouter, Body, Depends, FastAPI, Header
+from fastapi import APIRouter, Body, Depends, FastAPI, Header, requests
 from pydantic import BaseModel
 import subprocess
 
@@ -42,6 +42,16 @@ async def heartsend_heartbeatbeat(session = Depends(get_db)):
     battery=subprocess.check_output(['termux-battery-status']).decode('utf-8'),
     notifications=[]
   )
+  
+  try:
+    resp = requests.post("http://localhost:8000/brain/heartbeat", json={"token_dokka": key, "status": phone})
+    
+    if resp.status_code == 200:
+        print("Heartbeat enviado com sucesso!")
+    else:
+        print(f"Falha ao enviar heartbeat. Status code: {resp.status_code}")
+  except Exception as e:
+    print(f"Erro ao enviar heartbeat: {e}")
 
   return phone
 
