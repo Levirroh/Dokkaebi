@@ -9,11 +9,6 @@ from App.models.user_model import User
 # Importe aqui o seu get_db e seus Models (ajuste o caminho se necessário)
 # from database import get_db
 # from models import User
-from api.server_socket import ServerSocket
-
-def iniciar_dokkaebi():
-    server = ServerSocket(ip="100.x.y.z", porta=5005)
-    server.start() 
 
 app = FastAPI(title="Dokkaebi Backend")
 
