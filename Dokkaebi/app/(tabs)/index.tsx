@@ -1,5 +1,6 @@
-import Hello from '../../src/pages/login';
+import Welcome from "@/src/pages/welcome";
+
 
 export default function Page() {
-  return <Hello name={"Hello"} />;
+  return <Welcome name={"Welcome"} />;
 }
