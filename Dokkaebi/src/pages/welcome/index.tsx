@@ -5,7 +5,7 @@ export type Props = {
   name: string;
 };
 
-function Hello({name} : Props) {
+function Welcome({name} : Props) {
 
 
   return (
@@ -34,4 +34,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Hello;
+export default Welcome;
