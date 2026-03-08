@@ -1,11 +1,11 @@
 import { HeaderTitle } from '@react-navigation/elements';
-import {Button, StyleSheet, Text, View} from 'react-native';
+import { Button, StyleSheet, Text, View } from 'react-native';
 
 export type Props = {
   name: string;
 };
 
-function Welcome({name} : Props) {
+function Welcome({ name }: Props) {
 
 
   return (
