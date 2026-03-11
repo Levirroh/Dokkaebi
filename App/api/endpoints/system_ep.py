@@ -1,10 +1,12 @@
-from typing import Annotated
-from fastapi import APIRouter, Body, Depends, FastAPI, Header
-from pydantic import BaseModel
+from fastapi import APIRouter, FastAPI
 
 from App.database.session import get_db
 
-key = "#wqpoeiqwpeIEI"
+
+from dotenv import load_dotenv
+import os
+key = os.getenv("DOKKA_KEY")
+load_dotenv()
 
 router = APIRouter(
     prefix="/system",

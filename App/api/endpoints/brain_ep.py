@@ -8,7 +8,11 @@ from App.database.session import get_db
 from App.models.agent_model import Agent
 from App.models.system_model import Log, Notification
 
-key = "#acegik!*"
+from dotenv import load_dotenv
+import os
+key = os.getenv("DOKKA_KEY")
+load_dotenv()
+
 
 router = APIRouter(
     prefix="/data",

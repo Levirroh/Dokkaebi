@@ -4,7 +4,6 @@ import os
 # carregar .env
 load_dotenv()
 
-
 AF_INET = socket.AF_INET # PIv4
 SOCK_STREAM = socket.SOCK_STREAM # TCP
 

@@ -6,7 +6,11 @@ from pydantic import BaseModel
 from App.database.session import get_db
 from App.models.user_model import User
 
-key = "#ifoieibnvienv"
+from dotenv import load_dotenv
+import os
+key = os.getenv("DOKKA_KEY")
+load_dotenv()
+
 
 router = APIRouter(
     prefix="/auth",

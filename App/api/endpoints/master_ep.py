@@ -1,13 +1,13 @@
-from datetime import datetime
-from typing import Annotated
-from fastapi import APIRouter, Body, Depends, FastAPI, HTTPException, Header
-from pydantic import BaseModel
-import jwt
+from fastapi import APIRouter, Depends, FastAPI
 
 from App.database.session import get_db
 from App.models.agent_model import Agent
 
-key = "#LMAZpoqiwe098123"
+
+from dotenv import load_dotenv
+import os
+key = os.getenv("DOKKA_KEY")
+load_dotenv()
 
 router = APIRouter(
     prefix="/master",

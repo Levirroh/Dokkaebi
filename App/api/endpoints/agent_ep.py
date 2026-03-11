@@ -3,10 +3,12 @@ from fastapi import APIRouter, Body, Depends, FastAPI, Header, requests
 from pydantic import BaseModel
 import subprocess
 
+from dotenv import load_dotenv
+import os
+key = os.getenv("DOKKA_KEY")
+load_dotenv()
 
 from App.database.session import get_db
-
-key = "#LMAZpoqiwe"
 
 router = APIRouter(
     prefix="/agent",
