@@ -1,12 +1,19 @@
-from typing import Annotated
-from fastapi import APIRouter, Body, Depends, FastAPI, Header, requests
+import json
+from typing import Optional
+from fastapi import APIRouter, Depends, FastAPI, HTTPException
+import httpx
 from pydantic import BaseModel
 import subprocess
 
 from dotenv import load_dotenv
 import os
-key = os.getenv("DOKKA_KEY")
 load_dotenv()
+
+
+key = os.getenv("DOKKA_KEY")
+ip_dokka = os.getenv("IP_DOKKA")
+
+
 
 from App.database.session import get_db
 
@@ -20,11 +27,27 @@ router = APIRouter(
 class Check(BaseModel):
     token_dokka: str # dokka id already inside dokka token
 
+class Battery(BaseModel):
+  present: Optional[bool]
+  technology: Optional[str]
+  health: Optional[str]
+  plugged: Optional[str]
+  status: Optional[str]
+  voltage: Optional[int]
+  current: Optional[int]
+  current_average: Optional[int]
+  percentage: Optional[int]
+  level: Optional[int]
+  scale: Optional[int]
+  charge_counter: Optional[int]
+  energy: Optional[str]
+  cycle: Optional[int]
 class Phone(BaseModel):
     model: str
     android_version: str
-    battery: int
-    notifications: list[str]
+    battery: Battery
+    notifications: any
+
 
 
 app = FastAPI()
@@ -32,30 +55,38 @@ app = FastAPI()
 @app.post("/send_heartbeat/")
 async def heartsend_heartbeatbeat(session = Depends(get_db)):
   
+  resp_battery_status = json.loads(subprocess.check_output(['termux-battery-status']).decode('utf-8'))
+
+  #### GETTING DATA
+
+  battery_formmated = Battery(**resp_battery_status)
+
   phone = Phone(
-    model=subprocess.check_output(['termux-battery-status']).decode('utf-8'),
-    android_version=subprocess.run(
-            ['getprop', 'ro.product.model'],
-            check=True,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            text=True
-        ),
-    battery=subprocess.check_output(['termux-battery-status']).decode('utf-8'),
-    notifications=[]
+   model="x", #TEMPORARY
+   android_version="x", #TEMPORARY
+   battery=battery_formmated,
+   notifications=None #TEMPORARY
   )
   
-  try:
-    resp = requests.post("http://localhost:8000/brain/heartbeat", json={"token_dokka": key, "status": phone})
+  
+  
+  
+  #### RETURNING FOR DOKKA
     
+  try:
+    async with httpx.AsyncClient() as client: # o request. não aceita assíncrono, este sim
+      
+      resp = await client.post(f"http://{ip_dokka}/brain/heartbeat", 
+                               json={"token_dokka": key, "phone_data": phone.model_dump()},
+                               timeout=5.0)
+      
     if resp.status_code == 200:
-        print("Heartbeat enviado com sucesso!")
+      return phone
     else:
-        print(f"Falha ao enviar heartbeat. Status code: {resp.status_code}")
+      raise HTTPException(status_code=401, detail="ERRO ao enviar heartbeat.")
   except Exception as e:
-    print(f"Erro ao enviar heartbeat: {e}")
-
-  return phone
+    raise HTTPException(status_code=401, detail="ERRO ao enviar heartbeat.")
+  
 
 @app.post("/status/")
 async def status(session = Depends(get_db)):
