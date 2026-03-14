@@ -11,7 +11,7 @@ function DashBoard({ name }: Props) {
   return (
     <View style={styles.container}>
       <View style={styles.menu}>
-        <HeaderTitle>Comandos</HeaderTitle>
+        <HeaderTitle>Dispositivos</HeaderTitle>
       </View>
     </View>
   );
