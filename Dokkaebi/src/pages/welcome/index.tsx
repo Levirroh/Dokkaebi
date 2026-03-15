@@ -1,4 +1,6 @@
+import LoginModal from '@/src/components/loginModal';
 import { HeaderTitle } from '@react-navigation/elements';
+import { useState } from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
 
 export type Props = {
@@ -6,7 +8,11 @@ export type Props = {
 };
 
 function Welcome({ name }: Props) {
+  const [isOpen, setIsOpen] = useState(false);
 
+  function changeModal(){
+  setIsOpen(!isOpen)
+}
 
   return (
     <View style={styles.container}>
@@ -15,7 +21,9 @@ function Welcome({ name }: Props) {
         <Button
           title="Entrar"
           color="orange"
+          onPress={changeModal}
         />
+        <LoginModal isOpen={isOpen} onClose={changeModal}></LoginModal>
       </View>
     </View>
   );
