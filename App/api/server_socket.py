@@ -1,7 +1,6 @@
 import socket
 from dotenv import load_dotenv
 import os
-# carregar .env
 load_dotenv()
 
 AF_INET = socket.AF_INET # PIv4
@@ -20,13 +19,11 @@ def isValidKey(chave):
 print(f"[*] Dokkaebi ouvindo em {os.getenv('IP_DOKKA')}:{os.getenv('PORTA')}...")
 servidor.listen(5)
 exit = False
-# O programa espera nesse lugar até a conexão com o Agente ser estabelecida. O método accept() retorna um novo socket (conn) e o endereço do cliente (addr).
 while not exit:
   conn, addr = servidor.accept()
   print(f"[+] Conexão estabelecida com: {addr}")
   
   try:
-      # 1. Recebe os dados (que são em 1024 bytes)
       dados = conn.recv(1024)
       if not dados:
           print("[-] Conexão fechada pelo Agente.")
@@ -42,21 +39,18 @@ while not exit:
           
           if isValidKey(chave):
             print(f"[*] Chave válida! Executando: {acao}")
-            # Mova a resposta para cá!
             resposta = f"Dokkaebi: Executando {acao}".encode('utf-8')
             conn.send(resposta)
           else:
             print(f"[!] Tentativa de acesso negada para: {addr}")
 
-        # 3. Responde ao Agente (aparentemente tem que ser em bytes a resposta)
         resposta = f"Dokkaebi: Comando '{comando}' recebido com sucesso!".encode('utf-8')
         conn.send(resposta)
 
   finally:
       print("Comando realizado!")
-      conn.close()  # Vital para liberar o Agente e aceitar o próximo
+      conn.close() 
       
       
-# Só chega aqui se o loop quebrar
 servidor.close()
 print("[!] Servidor Dokkaebi desligado.")
