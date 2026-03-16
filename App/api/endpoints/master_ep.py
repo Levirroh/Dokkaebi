@@ -6,8 +6,8 @@ from App.models.agent_model import Agent
 
 from dotenv import load_dotenv
 import os
-key = os.getenv("DOKKA_KEY")
 load_dotenv()
+key = os.getenv("DOKKA_KEY")
 
 router = APIRouter(
     prefix="/master",

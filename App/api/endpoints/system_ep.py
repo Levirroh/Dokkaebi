@@ -5,8 +5,8 @@ from App.database.session import get_db
 
 from dotenv import load_dotenv
 import os
-key = os.getenv("DOKKA_KEY")
 load_dotenv()
+key = os.getenv("DOKKA_KEY")
 
 router = APIRouter(
     prefix="/system",
