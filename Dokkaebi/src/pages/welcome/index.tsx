@@ -14,6 +14,9 @@ function Welcome({ name }: Props) {
     setIsOpen(!isOpen)
   }
 
+  function login() {
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.card}>
@@ -33,7 +36,7 @@ function Welcome({ name }: Props) {
           />
         </View>
 
-        <TouchableOpacity style={styles.button} onPress={changeModal}>
+        <TouchableOpacity style={styles.button} onPress={login}>
           <Text style={styles.buttonText}>Entrar</Text>
         </TouchableOpacity>
 
