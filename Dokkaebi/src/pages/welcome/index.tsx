@@ -1,7 +1,7 @@
 import Message from '@/src/components/message';
 import { HeaderTitle } from '@react-navigation/elements';
 import { useState } from 'react';
-import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Button, StyleSheet, Text, TextInput, View, TouchableOpacity } from 'react-native';
 
 export type Props = {
   name: string;
@@ -16,16 +16,33 @@ function Welcome({ name }: Props) {
 
   return (
     <View style={styles.container}>
-      <View style={styles.greeting}>
-        <HeaderTitle>Dokkaebi</HeaderTitle>
-        <TextInput placeholder='Login' style={styles.input} />
-        <TextInput placeholder='Password' secureTextEntry={true} style={styles.input} />
-        <Button
-          title="Entrar"
-          color="orange"
-          onPress={changeModal}
+      <View style={styles.card}>
+        <Text style={styles.brand}>Dokkaebi</Text>
+        
+        <View style={styles.inputContainer}>
+          <TextInput 
+            placeholder='Login' 
+            placeholderTextColor="#888" 
+            style={styles.input} 
+          />
+          <TextInput 
+            placeholder='Password' 
+            placeholderTextColor="#888" 
+            secureTextEntry={true} 
+            style={styles.input} 
+          />
+        </View>
+
+        <TouchableOpacity style={styles.button} onPress={changeModal}>
+          <Text style={styles.buttonText}>Entrar</Text>
+        </TouchableOpacity>
+
+        <Message 
+          isShown={isOpen} 
+          onClose={changeModal} 
+          duration={3} 
+          message={"Usuário ou senha inválidos"} 
         />
-        <Message isShown={isOpen} onClose={changeModal} duration={3} message={"Usuário ou senha inválidos"}></Message>
       </View>
     </View> 
   );
@@ -34,36 +51,59 @@ function Welcome({ name }: Props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#0f0f0f', // Fundo quase preto
     alignItems: 'center',
     justifyContent: 'center',
+    padding: 20,
   },
-  greeting: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    margin: 16,
+  card: {
+    width: '100%',
+    maxWidth: 400,
+    backgroundColor: '#1a1a1a', // Cinza muito escuro
+    borderRadius: 16,
+    padding: 30,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 10,
   },
-  overlay: {
-    flex: 1, 
-    backgroundColor: 'rgba(0, 0, 0, 0.5)', 
-    justifyContent: 'center', 
-    alignItems: 'center', 
+  brand: {
+    fontSize: 32,
+    fontWeight: '900',
+    color: 'orange',
+    marginBottom: 40,
+    letterSpacing: 2,
+    textTransform: 'uppercase',
   },
-  title: {
-    textAlign: 'center',
-  },
-  buttonContainer: {
-    alignContent: 'center',
+  inputContainer: {
+    width: '100%',
+    gap: 12,
+    marginBottom: 25,
   },
   input: {
-    backgroundColor: 'gray',
-    color: 'black',
+    width: '100%',
+    backgroundColor: '#2a2a2a',
+    color: '#fff',
+    padding: 16,
+    borderRadius: 8,
+    fontSize: 16,
+    borderWidth: 1,
+    borderColor: '#333',
   },
-  modalCard: {
-    width: '30%', 
-    backgroundColor: 'white',
-    borderRadius: 10,
-    padding: 20,
-    elevation: 5,
+  button: {
+    width: '100%',
+    backgroundColor: 'orange',
+    padding: 16,
+    borderRadius: 8,
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  buttonText: {
+    color: '#000',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
 });
 
