@@ -2,6 +2,9 @@ import Message from '@/src/components/message';
 import { HeaderTitle } from '@react-navigation/elements';
 import { useState } from 'react';
 import { Button, StyleSheet, Text, TextInput, View, TouchableOpacity } from 'react-native';
+import axios from 'axios';
+import { router } from '@/.expo/types/router';
+
 
 export type Props = {
   name: string;
@@ -9,30 +12,46 @@ export type Props = {
 
 function Welcome({ name }: Props) {
   const [isOpen, setIsOpen] = useState(false);
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [message, setMessage] = useState('');
 
   function changeModal() {
     setIsOpen(!isOpen)
   }
 
-  function login() {
+  async function login() {
+    axios.post('http://localhost:3000/login', {
+      username,
+      password
+    }).then((result) => {
+      // router.navigate("/dashboard");
+    }).catch((err) => {
+      setMessage(err.response.data.message)
+      changeModal()
+    });
   }
 
   return (
     <View style={styles.container}>
       <View style={styles.card}>
         <Text style={styles.brand}>Dokkaebi</Text>
-        
+
         <View style={styles.inputContainer}>
-          <TextInput 
-            placeholder='Login' 
-            placeholderTextColor="#888" 
-            style={styles.input} 
+          <TextInput
+            placeholder='Login'
+            placeholderTextColor="#888"
+            style={styles.input}
+            value={username}
+            onChangeText={setUsername}
           />
-          <TextInput 
-            placeholder='Password' 
-            placeholderTextColor="#888" 
-            secureTextEntry={true} 
-            style={styles.input} 
+          <TextInput
+            placeholder='Password'
+            placeholderTextColor="#888"
+            secureTextEntry={true}
+            style={styles.input}
+            value={password}
+            onChangeText={setPassword}
           />
         </View>
 
@@ -40,21 +59,21 @@ function Welcome({ name }: Props) {
           <Text style={styles.buttonText}>Entrar</Text>
         </TouchableOpacity>
 
-        <Message 
-          isShown={isOpen} 
-          onClose={changeModal} 
-          duration={3} 
-          message={"Usuário ou senha inválidos"} 
+        <Message
+          isShown={isOpen}
+          onClose={changeModal}
+          duration={2}
+          message={message}
         />
       </View>
-    </View> 
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#0f0f0f', // Fundo quase preto
+    backgroundColor: '#0f0f0f',
     alignItems: 'center',
     justifyContent: 'center',
     padding: 20,
