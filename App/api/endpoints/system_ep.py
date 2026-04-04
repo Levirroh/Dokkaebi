@@ -1,6 +1,6 @@
 from fastapi import APIRouter, FastAPI
 
-from App.database.session import get_db
+from database.session import get_db
 
 
 from dotenv import load_dotenv
@@ -14,7 +14,3 @@ router = APIRouter(
     dependencies=[],
     responses={404: {"description": "Not found"}},
 )
-
-
-app = FastAPI()
-

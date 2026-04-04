@@ -1,47 +1,50 @@
 from typing import Annotated
-from fastapi import APIRouter, Body, Depends, FastAPI, HTTPException, Header
+from fastapi import APIRouter, Body, Depends, HTTPException, Header
+from sqlalchemy.orm import Session
+from sqlalchemy import select 
 import jwt
 from pydantic import BaseModel
+from passlib.context import CryptContext
 
-from App.database.session import get_db
-from App.models.user_model import User
+
+from database.session import get_db
+from models.user_model import User
 
 from dotenv import load_dotenv
 import os
+
 load_dotenv()
 key = os.getenv("DOKKA_KEY")
-
 
 router = APIRouter(
     prefix="/auth",
     tags=["auth"],
-    dependencies=[],
-    responses={404: {"description": "Not found"}},
 )
 
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
 class Login(BaseModel):
-    token_dokka: str # dokka id already inside dokka token
+    username: str
+    password: str
 
+@router.post("/login")
+async def logs(req: Login, session: Session = Depends(get_db)):
+  statement = select(User).where(User.username == req.username)
 
+  # provisório para teste, depois remover
+  if(req.username == "admin" and req.password == "admin"):
+    return {
+      "result": True,
+      "message": "Bem-vindo, admin!",
+    }
 
-app = FastAPI()
-
-@app.post("/login/")
-async def logs(req: Annotated[Login | None, Body()], header: Annotated[str | None, Header()] = None, session = Depends(get_db)):
-  try:
-    login = jwt.decode(header, key, algorithms=["HS256"])
+  user = session.execute(statement).scalars().first()
+  
+  if not user or not pwd_context.verify(req.password, user.password_hash):
+      raise HTTPException(status_code=401, detail="ERRO: Usuário ou senha incorretos.")
     
-    password = login["password"]
-    username = login["username"]
-    
-    user = session.select(User).where(User.username == login["username"] and User.usernamepassword == jwt.encode(login["password"], key, algorithm=["HS256"])).first()
-    
-    if(not user):
-        raise HTTPException(status_code=404, detail="ERRO: Usuário não encontrado.")
-        
-    
-  except jwt.exceptions.InvalidTokenError:
-    raise HTTPException(status_code=401, detail="ERRO: Token Inválido ou Expirado.")
-
-  return {"result": True}
-
+  return {
+      "result": True,
+      "message": f"Bem-vindo, {user.username}!",
+      "user_id": user.id 
+  }

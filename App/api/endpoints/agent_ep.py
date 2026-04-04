@@ -15,7 +15,7 @@ ip_dokka = os.getenv("IP_DOKKA")
 
 
 
-from App.database.session import get_db
+from database.session import get_db
 
 router = APIRouter(
     prefix="/agent",
@@ -46,13 +46,11 @@ class Phone(BaseModel):
     model: str
     android_version: str
     battery: Battery
-    notifications: any
+    notifications: Optional[str]
 
 
 
-app = FastAPI()
-
-@app.post("/send_heartbeat/")
+@router.post("/send_heartbeat/")
 async def heartsend_heartbeatbeat(session = Depends(get_db)):
   
   resp_battery_status = json.loads(subprocess.check_output(['termux-battery-status']).decode('utf-8'))
@@ -67,9 +65,6 @@ async def heartsend_heartbeatbeat(session = Depends(get_db)):
    battery=battery_formmated,
    notifications=None #TEMPORARY
   )
-  
-  
-  
   
   #### RETURNING FOR DOKKA
     
@@ -88,12 +83,12 @@ async def heartsend_heartbeatbeat(session = Depends(get_db)):
     raise HTTPException(status_code=401, detail="ERRO ao enviar heartbeat.")
   
 
-@app.post("/status/")
+@router.post("/status/")
 async def status(session = Depends(get_db)):
   
   return True
 
-@app.post("/photo/")
+@router.post("/photo/")
 async def photo(session = Depends(get_db)):
   
   return True

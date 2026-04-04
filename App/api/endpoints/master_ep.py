@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, FastAPI
 
-from App.database.session import get_db
-from App.models.agent_model import Agent
+from database.session import get_db
+from models.agent_model import Agent
 
 
 from dotenv import load_dotenv
@@ -16,9 +16,7 @@ router = APIRouter(
     responses={404: {"description": "Not found"}},
 )
 
-app = FastAPI()
-
-@app.get("/dashboard/")
+@router.get("/dashboard/")
 async def dashboard(session = Depends(get_db)):
 
   result = session.query(Agent).all()

@@ -4,9 +4,9 @@ from fastapi import APIRouter, Body, Depends, FastAPI, HTTPException, Header
 import jwt
 from pydantic import BaseModel
 
-from App.database.session import get_db
-from App.models.agent_model import Agent
-from App.models.system_model import Log, Notification
+from database.session import get_db
+from models.agent_model import Agent
+from models.system_model import Log, Notification
 
 from dotenv import load_dotenv
 import os
@@ -24,10 +24,7 @@ router = APIRouter(
 class Check(BaseModel):
     token_dokka: str # dokka id already inside dokka token
 
-
-app = FastAPI()
-
-@app.post("/heartbeat/")
+@router.post("/heartbeat/")
 async def heartbeat(req: Annotated[Check | None, Body()], header: Annotated[str | None, Header()] = None, session = Depends(get_db)):
   try:
     agent = jwt.decode(header, key, algorithms=["HS256"])
@@ -49,7 +46,7 @@ async def heartbeat(req: Annotated[Check | None, Body()], header: Annotated[str 
   return {"message": "Dokkaebi online", "agent": agent}
 
 
-@app.post("/logs/")
+@router.post("/logs/")
 async def logs(req: Annotated[Check | None, Body()], header: Annotated[str | None, Header()] = None, session = Depends(get_db)):
   try:
     jwt.decode(header, key, algorithms=["HS256"])
@@ -61,7 +58,7 @@ async def logs(req: Annotated[Check | None, Body()], header: Annotated[str | Non
   except jwt.exceptions.InvalidTokenError:
     raise HTTPException(status_code=401, detail="ERRO: Token Inválido ou Expirado.")
 
-@app.post("/notifications/")
+@router.post("/notifications/")
 async def notifications(req: Annotated[Check | None, Body()], header: Annotated[str | None, Header()] = None, session = Depends(get_db)):
   try:
     jwt.decode(header, key, algorithms=["HS256"])
