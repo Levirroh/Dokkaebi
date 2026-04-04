@@ -13,7 +13,7 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack screenOptions={{ headerShown: false }}> // headerShown: false - faz nao aparecer o caminho no header
+      <Stack screenOptions={{ headerShown: false }}>
       </Stack>
       <StatusBar style="auto" />
     </ThemeProvider>
