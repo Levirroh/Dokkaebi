@@ -12,8 +12,8 @@ export type Props = {
 
 function Welcome({ name }: Props) {
   const [isOpen, setIsOpen] = useState(false);
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [message, setMessage] = useState('');
 
   function changeModal() {
@@ -21,11 +21,11 @@ function Welcome({ name }: Props) {
   }
 
   async function login() {
-    axios.post('http://localhost:3000/login', {
+    axios.post('http://localhost:8000/auth/login', {
       username,
       password
     }).then((result) => {
-      // router.navigate("/dashboard");
+      // router.navigate('/dashboard');
     }).catch((err) => {
       setMessage(err.response.data.message)
       changeModal()
