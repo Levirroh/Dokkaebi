@@ -1,15 +1,14 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-SQLALCHEMY_DATABASE_URL = "sqlite:///./dokkaebi.db" # for now
+# Padrão: mysql://usuario:senha@host:porta/nome_do_banco
+SQLALCHEMY_DATABASE_URL = "mysql://root:root@localhost:3306/dokkaebi"
 
-# O 'check_same_thread' é necessário apenas para SQLite
-engine = create_engine(
-    SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}
-)
+# No MySQL não precisamos do 'check_same_thread'
+engine = create_engine(SQLALCHEMY_DATABASE_URL)
+
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-# Função que o FastAPI usa para abrir/fechar o banco em cada requisição
 def get_db():
     db = SessionLocal()
     try:
