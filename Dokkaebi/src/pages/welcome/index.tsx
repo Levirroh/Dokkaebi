@@ -27,7 +27,7 @@ function Welcome({ name }: Props) {
     }).then((result) => {
       // router.navigate('/dashboard');
     }).catch((err) => {
-      setMessage(err.response.data.message)
+      // setMessage(err.response.data.message)
       changeModal()
     });
   }

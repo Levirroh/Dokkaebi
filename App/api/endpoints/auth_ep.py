@@ -32,13 +32,15 @@ async def logs(req: Login, session: Session = Depends(get_db)):
   statement = select(User).where(User.username == req.username)
 
   # provisório para teste, depois remover
-  if(req.username == "admin" and req.password == "admin"):
-    return {
-      "result": True,
-      "message": "Bem-vindo, admin!",
-    }
+#   if(req.username == "admin" and req.password == "admin"):
+#     return {
+#       "result": True,
+#       "message": "Bem-vindo, admin!",
+#     }
 
   user = session.execute(statement).scalars().first()
+  
+  print(user)
   
   if not user or not pwd_context.verify(req.password, user.password_hash):
       raise HTTPException(status_code=401, detail="ERRO: Usuário ou senha incorretos.")
