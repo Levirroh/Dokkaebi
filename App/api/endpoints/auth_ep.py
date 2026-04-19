@@ -1,11 +1,11 @@
 from typing import Annotated
+import bcrypt
 from fastapi import APIRouter, Body, Depends, HTTPException, Header
 from sqlalchemy.orm import Session
 from sqlalchemy import select 
 import jwt
 from pydantic import BaseModel
-from passlib.context import CryptContext
-
+from api.helpers.text_helper import verify_password
 
 from database.session import get_db
 from models.user_model import User
@@ -21,7 +21,6 @@ router = APIRouter(
     tags=["auth"],
 )
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 class Login(BaseModel):
     username: str
@@ -29,24 +28,17 @@ class Login(BaseModel):
 
 @router.post("/login")
 async def logs(req: Login, session: Session = Depends(get_db)):
-  statement = select(User).where(User.username == req.username)
+    statement = select(User).where(User.username == req.username)
+    user = session.execute(statement).scalars().first()
 
-  # provisório para teste, depois remover
-#   if(req.username == "admin" and req.password == "admin"):
-#     return {
-#       "result": True,
-#       "message": "Bem-vindo, admin!",
-#     }
+    if not user or not verify_password(req.password, user.password_hash):
+        raise HTTPException(
+            status_code=401, 
+            detail="ERRO: Usuário ou senha incorretos."
+        )
 
-  user = session.execute(statement).scalars().first()
-  
-  print(user)
-  
-  if not user or not pwd_context.verify(req.password, user.password_hash):
-      raise HTTPException(status_code=401, detail="ERRO: Usuário ou senha incorretos.")
-    
-  return {
-      "result": True,
-      "message": f"Bem-vindo, {user.username}!",
-      "user_id": user.id 
-  }
+    return {
+        "result": True,
+        "message": f"Bem-vindo, {user.username}!",
+        "user_id": user.id_usuario 
+    }
