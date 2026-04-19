@@ -1,4 +1,4 @@
-import Welcome from "@/src/pages/welcome";
+import Welcome from "../pages/welcome";
 
 
 export default function Page() {

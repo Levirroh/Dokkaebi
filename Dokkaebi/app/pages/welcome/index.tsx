@@ -1,10 +1,8 @@
 import Message from '@/src/components/message';
-import { HeaderTitle } from '@react-navigation/elements';
 import { useState } from 'react';
 import { Button, StyleSheet, Text, TextInput, View, TouchableOpacity } from 'react-native';
 import axios from 'axios';
-import { router } from '@/.expo/types/router';
-
+import { router } from 'expo-router';
 
 export type Props = {
   name: string;
@@ -25,7 +23,7 @@ function Welcome({ name }: Props) {
       username,
       password
     }).then((result) => {
-      // router.navigate('/dashboard');
+      router.replace("/pages/dashboard/index");
     }).catch((err) => {
       // setMessage(err.response.data.message)
       changeModal()
