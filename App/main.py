@@ -12,9 +12,6 @@ from models.user_model import User
 
 app = FastAPI(title="Dokkaebi Backend")
 
-app.include_router(api_router)
-
-
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"], 
@@ -22,6 +19,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.include_router(api_router)
 
 @app.get("/ping")
 async def ping():
