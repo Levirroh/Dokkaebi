@@ -24,14 +24,7 @@ app.include_router(api_router)
 
 @app.get("/ping")
 async def ping():
-    return {"status": "online", "message": "Dokkaebi System Active"}
-
-@app.get("/test-db")
-def test_db(db: Session = Depends(get_db)):
-    statement = select(User).limit(1)
-    result = db.execute(statement).scalars().first()
-    return {"message": "Conexão com banco pronta para implementar"}
-
+    return True
 
 if __name__ == "__main__":
     import uvicorn
