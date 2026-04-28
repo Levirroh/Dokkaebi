@@ -6,10 +6,6 @@ from api.router import api_router
 from database.session import get_db
 from models.user_model import User
 
-# Importe aqui o seu get_db e seus Models (ajuste o caminho se necessário)
-# from database import get_db
-# from models import User
-
 app = FastAPI(title="Dokkaebi Backend")
 
 app.add_middleware(
