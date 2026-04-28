@@ -23,7 +23,7 @@ function Welcome({ name }: Props) {
       username,
       password
     }).then((result) => {
-      router.replace("/pages/dashboard/index");
+      router.replace("/pages/dashboard");
     }).catch((err) => {
       // setMessage(err.response.data.message)
       changeModal()
