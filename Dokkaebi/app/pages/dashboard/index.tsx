@@ -78,8 +78,8 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   menuItem: {
-    width: '48%', // Garante 2 por linha com espaçamento
-    aspectRatio: 1.25, // Mantém o container quadrado
+    width: '48%', 
+    aspectRatio: 1.25, 
     backgroundColor: '#1a1a1a',
     borderRadius: 12,
     justifyContent: 'center',
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     borderWidth: 1,
     borderColor: '#252525',
-    position: 'relative', // Para o posicionamento do badge
+    position: 'relative', 
   },
   menuText: {
     color: '#e0e0e0',
@@ -106,7 +106,6 @@ const styles = StyleSheet.create({
     height: 20,
     justifyContent: 'center',
     alignItems: 'center',
-    // Glow effect para o alerta
     shadowColor: 'orange',
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.8,
