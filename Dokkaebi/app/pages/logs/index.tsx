@@ -5,13 +5,13 @@ export type Props = {
   name: string;
 };
 
-function Actions({ name }: Props) {
+function Logs({ name }: Props) {
 
 
   return (
     <View style={styles.container}>
       <View style={styles.menu}>
-        <HeaderTitle>Comandos</HeaderTitle>
+        <HeaderTitle>Logs</HeaderTitle>
       </View>
     </View>
   );
@@ -30,4 +30,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Actions;
+export default Logs;
