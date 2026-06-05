@@ -3,7 +3,7 @@ from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from api.router import api_router
-from database.session import get_db
+from database.session import SessionLocal, get_db
 from models.user_model import User
 
 app = FastAPI(title="Dokkaebi Backend")

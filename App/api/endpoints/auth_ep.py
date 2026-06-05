@@ -27,18 +27,24 @@ class Login(BaseModel):
     password: str
 
 @router.post("/login")
-async def logs(req: Login, session: Session = Depends(get_db)):
-    statement = select(User).where(User.username == req.username)
-    user = session.execute(statement).scalars().first()
+async def login(req: Login, session: Session = Depends(get_db)):
+    try:
+        statement = select(User).where(User.username == req.username)
+        user = session.execute(statement).scalars().first()
 
-    if not user or not verify_password(req.password, user.password_hash):
+        if not user or not verify_password(req.password, user.password_hash):
+            raise HTTPException(
+                status_code=401, 
+                detail="ERRO: Usuário ou senha incorretos."
+            )
+
+        return {
+            "result": True,
+            "message": f"Bem-vindo, {user.username}!",
+            "user_id": user.id_usuario 
+        }
+    except Exception as e:
         raise HTTPException(
-            status_code=401, 
-            detail="ERRO: Usuário ou senha incorretos."
+            status_code=504, 
+            detail="ERRO: Não foi possível processar a solicitação."
         )
-
-    return {
-        "result": True,
-        "message": f"Bem-vindo, {user.username}!",
-        "user_id": user.id_usuario 
-    }
