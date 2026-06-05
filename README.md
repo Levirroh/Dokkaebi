@@ -1,3 +1,14 @@
+For devs:
+
+Virtual Enviroment:
+
+python -m venv .venv
+
+Starting (powershell):
+
+.venv\Scripts\Activate.ps1
+
+
 # 📱 Dokkaebi
 
 A self-hosted automation server and command gateway designed to breathe new life into old Android devices. This project leverages the **Termux** environment to transform idle hardware into a secure, extensible remote control hub.
@@ -53,6 +64,11 @@ front:
 
 back:
 ```pip install fastapi uvicorn python-dotenv```
+
+or
+
+```pip install -r requirements.txt```
+
 
 termux:
 ```pkg install termux-api```
