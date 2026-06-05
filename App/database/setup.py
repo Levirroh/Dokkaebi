@@ -20,3 +20,6 @@ def get_databases():
       
   print(databases)
   return databases
+
+
+# def setup_sqlite():
