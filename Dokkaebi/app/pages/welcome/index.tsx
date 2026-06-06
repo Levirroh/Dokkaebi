@@ -1,4 +1,4 @@
-import Message from '@/src/components/message';
+import Message from '@/components/general/message';
 import { useState } from 'react';
 import { Button, StyleSheet, Text, TextInput, View, TouchableOpacity } from 'react-native';
 import axios from 'axios';
@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
   brand: {
     fontSize: 32,
     fontWeight: '900',
-    color: 'orange',
+    color: 'aqua',
     marginBottom: 40,
     letterSpacing: 2,
     textTransform: 'uppercase',
@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
   },
   button: {
     width: '100%',
-    backgroundColor: 'orange',
+    backgroundColor: 'aqua',
     padding: 16,
     borderRadius: 8,
     alignItems: 'center',

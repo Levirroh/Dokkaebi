@@ -1,19 +1,19 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native';
+import { Image, StyleSheet, Text, View, TouchableOpacity, ScrollView, FlatList } from 'react-native';
 import { Href, router } from 'expo-router';
-import { 
-  Smartphone, 
-  Zap, 
-  Users, 
-  Settings, 
-  Cpu, 
-  FileText, 
-  Database, 
-  AlertCircle 
+import {
+  Smartphone,
+  Zap,
+  Users,
+  Settings,
+  Cpu,
+  FileText,
+  Database,
+  AlertCircle
 } from 'lucide-react-native';
 
 // Estrutura das opções do menu
-const MENU_OPTIONS = [
+const options = [
   { id: '1', title: 'Dispositivos', icon: Smartphone, route: '/pages/devices', critical: false },
   { id: '2', title: 'Ações', icon: Zap, route: '/pages/actions', critical: false },
   { id: '3', title: 'Usuários', icon: Users, route: '/pages/users', critical: false },
@@ -26,26 +26,23 @@ const MENU_OPTIONS = [
 export default function Dashboard() {
   return (
     <View style={styles.container}>
-      <Text style={styles.brand}>Dokkaebi</Text>
-      
-      <ScrollView contentContainerStyle={styles.grid}>
-        {MENU_OPTIONS.map((card) => (
-          <TouchableOpacity 
-            key={card.id} 
-            style={styles.menuItem}
-            onPress={() => router.replace(card.route as Href)}
-            activeOpacity={0.7}
-          >
-            {card.critical && (
-              <View style={styles.badge}>
-                <AlertCircle size={14} color="#000" strokeWidth={3} />
-              </View>
-            )}
-
-            <card.icon size={32} color="orange" strokeWidth={1.5} />
-            <Text style={styles.menuText}>{card.title}</Text>
-          </TouchableOpacity>
-        ))}
+      <Text style={styles.title}>Dokkaebi</Text>
+      <ScrollView>
+        <FlatList
+        style={styles.grid}
+          data={options}
+          renderItem={(option) => {
+            return (
+              <TouchableOpacity style={styles.menuItem}>
+                <option.item.icon size={32} color="aqua" strokeWidth={1.5} />
+                <Text style={styles.card_title}>{option.item.title}</Text>
+              </TouchableOpacity >
+            )
+          }}
+          keyExtractor={option => option.id}
+          numColumns={2}
+          columnWrapperStyle={styles.row}
+        />
       </ScrollView>
     </View>
   );
@@ -58,7 +55,19 @@ const styles = StyleSheet.create({
     paddingTop: 60,
     paddingHorizontal: 15,
   },
-  brand: {
+  menuItem: {
+    width: '25%',
+    aspectRatio: 1.25,
+    backgroundColor: '#1a1a1a',
+    borderRadius: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#252525',
+    position: 'relative',
+  },
+  title: {
+    marginTop: 10,
     fontSize: 22,
     fontWeight: '800',
     color: 'white',
@@ -66,50 +75,25 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     textAlign: 'left',
     marginBottom: 30,
-    marginLeft: 10,
+    marginLeft: '15%',
     borderLeftWidth: 3,
-    borderLeftColor: 'orange',
+    borderLeftColor: 'aqua',
     paddingLeft: 15,
   },
-  grid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-    paddingBottom: 20,
-  },
-  menuItem: {
-    width: '48%', 
-    aspectRatio: 1.25, 
-    backgroundColor: '#1a1a1a',
-    borderRadius: 12,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 15,
-    borderWidth: 1,
-    borderColor: '#252525',
-    position: 'relative', 
-  },
-  menuText: {
+  card_title: {
     color: '#e0e0e0',
     marginTop: 12,
     fontSize: 14,
     fontWeight: '600',
     textAlign: 'center',
   },
-  badge: {
-    position: 'absolute',
-    top: 10,
-    right: 10,
-    backgroundColor: 'orange',
-    borderRadius: 10,
-    width: 20,
-    height: 20,
+  row: {
+    columnGap: '3vh',
     justifyContent: 'center',
-    alignItems: 'center',
-    shadowColor: 'orange',
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.8,
-    shadowRadius: 4,
-    elevation: 5,
+    marginBottom: 16
   },
+  grid:{
+    width: '100%',
+    alignContent: 'center'
+  }
 });
