@@ -5,6 +5,7 @@ from sqlalchemy.orm import Session
 from api.router import api_router
 from database.session import SessionLocal, get_db
 from models.user_model import User
+import uvicorn
 
 app = FastAPI(title="Dokkaebi Backend")
 
@@ -23,5 +24,4 @@ async def ping():
     return True
 
 if __name__ == "__main__":
-    import uvicorn
     uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)
