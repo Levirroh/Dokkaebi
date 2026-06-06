@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy import select 
 import jwt
 from pydantic import BaseModel
-from api.helpers.text_helper import verify_password
+from App.helpers.text_helper import verify_password
 
 from database.session import get_db
 from models.user_model import User
