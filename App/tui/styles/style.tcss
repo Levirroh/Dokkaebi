@@ -1,0 +1,34 @@
+* {
+  background: black;
+  color: aqua;
+}
+
+Input {
+    border: none;
+}
+
+Rule {
+    height: 1;
+    margin: 0;
+    padding: 0;
+}
+
+#prompt-line {
+    height: 1;
+    width: 100%;
+}
+
+#prompt {
+    width: 10;
+}
+
+#command-input {
+    width: 1fr;
+}
+
+.separator {
+    height: 1;
+    margin: 0;
+    padding: 0;
+    color: white;
+}

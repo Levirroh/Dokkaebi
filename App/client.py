@@ -1,11 +1,10 @@
-import helpers.screen_helper as screen_helper
+from helpers import screen_helper
+from tui.pages.dokkaebi_client import Dokkaebi_client
 
-def main():
-  screen_helper.clear_screen()
-    
-    
 if __name__ == "__main__":
-    main()
+    screen_helper.cls()
+    Dokkaebi_client().run()
     
     
     
+#CMC0ncept@150710
