@@ -1,0 +1,11 @@
+{
+  "screen": {
+    "width": 80,
+    "height": 24
+  },
+  "colors": {
+    "background": "black",
+    "text": "white",
+    "accent": "cyan"
+  }
+}
