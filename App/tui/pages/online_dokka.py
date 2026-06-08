@@ -6,7 +6,7 @@ from textual.containers import Horizontal, Vertical
 import tui.classes.settings_config as SettingsConfig
 from tui.components.menu import TerminalMenu
 
-class Main_menu(Screen):
+class Online_dokka(Screen):
     BINDINGS = [
         ("up", "move_up", "Subir"),
         ("down", "move_down", "Descer"),
@@ -18,10 +18,9 @@ class Main_menu(Screen):
         self.settings = SettingsConfig.get_config()
         self.selected_index = 0
         self.options = [
-            "Connect to Dokkaebi",
-            "Local Tests",
-            "Settings",
-            "Sair"
+            "Actions",
+            "Dashboard",
+            "Return"
         ]
     
     def compose(self) -> ComposeResult:
@@ -65,11 +64,5 @@ class Main_menu(Screen):
         selected = self.options[self.selected_index]
 
         match selected:
-            case "Connect to Dokkaebi":
-                self.app.push_screen("local_dokka")
-            case "Local Tests":
-                self.app.push_screen("local_tests")
-            case "Settings":
-                self.app.push_screen("settings")
-            case "Sair":
-                self.app.exit()
+            case "Return":
+                self.app.pop_screen()

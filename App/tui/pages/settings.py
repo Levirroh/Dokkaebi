@@ -7,7 +7,6 @@ import tui.classes.settings_config as SettingsConfig
 from tui.components.menu import TerminalMenu
 
 class Settings(Screen):
-    CSS_PATH="../styles/settings.tcss"
     BINDINGS = [
         ("up", "move_up", "Subir"),
         ("down", "move_down", "Descer"),
@@ -27,10 +26,10 @@ class Settings(Screen):
         self.update_menu()
     
     def compose(self) -> ComposeResult:
-        with Vertical(id="settings-box"):
-            yield Static(f"DOKKAEBI::{self.__class__.__name__.replace("_", " ").upper()} | Mode: Terminal | Status: {self.settings.connection.connection_type.value}", id="title")
+        with Vertical(id="header-box"):
+            yield Static(f"DOKKAEBI::{self.__class__.__name__.replace('_', ' ').upper()} | Mode: Terminal | Status: {self.settings.connection.connection_type.value}", id="title")
 
-            with Horizontal(classes="menu", id="settings-content"):
+            with Horizontal(classes="menu"):
                 with Vertical(id="settings-menu"):
                     for index, option in enumerate(self.settings_options):
                         yield Static(
@@ -76,4 +75,6 @@ class Settings(Screen):
         self.app.pop_screen()
     
     def action_enter(self) -> None:
-        print("asdkasd")
+        match self.selected_index:
+            case 2:
+                self.app.pop_screen()

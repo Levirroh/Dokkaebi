@@ -1,5 +1,6 @@
 from textual.app import App, ComposeResult
 
+from tui.pages.online_dokka import Online_dokka
 from tui.pages.settings import Settings
 from tui.pages.local_tests import Local_tests
 from tui.pages.main_menu import Main_menu
@@ -11,6 +12,7 @@ class Dokkaebi_client(App):
 
     SCREENS = {
         "main_menu": Main_menu,
+        "local_dokka": Online_dokka,
         "setup": Environment_setup,
         "local_tests": Local_tests,
         "settings": Settings,
