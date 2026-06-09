@@ -1,6 +1,7 @@
 from textual.app import ComposeResult
 from textual.screen import Screen
 
+from tui.navigation.action_handler import ActionHandler
 from tui.navigation.menu_tree.menu_tree import MAIN_TREE, RETURN_NODE
 import tui.classes.settings_config as SettingsConfig
 from tui.components.menu import TerminalMenu
@@ -21,7 +22,8 @@ class Main_menu(Screen):
         self.selected_index = 0
 
         self.history = []
-
+        self.action_handler = ActionHandler(self)        
+        
         self.TREE = MAIN_TREE
         self.BRANCH = self.TREE
         self.tree_children = self.BRANCH["children"]
@@ -86,12 +88,5 @@ class Main_menu(Screen):
             self.app.push_screen(selected_item["screen"])
 
         elif selected_type == "action":
-            if selected_item["action"] == "return":
-                if self.history:
-                    self.BRANCH = self.history.pop()
-                    self.selected_index = 0
-                    self.reload_menu()
-
-            elif selected_item["action"] == "exit":
-                self.app.exit()
+            self.action_handler.handle(selected_item)       
                     
