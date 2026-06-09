@@ -40,3 +40,4 @@ class MenuOptions(Vertical):
             else:
                 option_widget.update(f"  {label}")
                 option_widget.remove_class("selected")
+                

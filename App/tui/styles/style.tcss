@@ -91,10 +91,17 @@ Rule {
   padding: 0 1;
 }
 
-#settings-details-options {
+#settings-details-requires {
   height: auto;
   padding: 0 1;
   color: aliceblue;
+  text-style: italic;
+}
+
+#settings-details-warnings {
+  height: auto;
+  padding: 0 1;
+  color: firebrick;
   text-style: italic;
 }
 

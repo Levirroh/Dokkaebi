@@ -17,7 +17,8 @@ class MenuDescription(Vertical):
     def compose(self) -> ComposeResult:
         yield Static("", id="settings-details-title")
         yield Static("", id="settings-details-desc")
-        yield Static("", id="settings-details-options")
+        yield Static("", id="settings-details-requires")
+        yield Static("", id="settings-details-warnings")
 
     def on_mount(self) -> None:
         self.update_description()
@@ -37,6 +38,14 @@ class MenuDescription(Vertical):
             selected_item["description"]
         )
 
-        self.query_one("#settings-details-options", Static).update(
-            selected_item["options"]
+        requires = selected_item.get("requires", [])
+
+        self.query_one("#settings-details-requires", Static).update(
+            ("Requires: " + ", ".join(requires).capitalize().replace("_"," ") if requires else "")
+        )
+        
+        warnings = selected_item.get("warnings", [])
+
+        self.query_one("#settings-details-warnings", Static).update(
+            ("WARNING: " + "\n".join(warnings).capitalize().replace("_"," ") if warnings else "")
         )
