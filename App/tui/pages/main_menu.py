@@ -1,16 +1,17 @@
 from textual.app import ComposeResult
 from textual.screen import Screen
 
-from tui.classes.menu_tree.menu_tree import MAIN_TREE, RETURN_NODE
+from tui.navigation.menu_tree.menu_tree import MAIN_TREE, RETURN_NODE
 import tui.classes.settings_config as SettingsConfig
 from tui.components.menu import TerminalMenu
 
 
 class Main_menu(Screen):
     BINDINGS = [
-        ("up", "move_up", "Subir"),
-        ("down", "move_down", "Descer"),
-        ("enter", "select", "Selecionar"),
+        ("up", "move_up", "Up"),
+        ("down", "move_down", "Down"),
+        ("enter", "select", "Select"),
+        ("escape", "return", "Return"),
     ]
 
     def __init__(self):
@@ -58,6 +59,17 @@ class Main_menu(Screen):
     def action_move_down(self) -> None:
         self.selected_index = (self.selected_index + 1) % len(self.tree_children)
         self.update_menu_selection()
+        
+    def action_return(self) -> None:
+        if self.BRANCH["id"] != "main":
+            if self.history:
+                self.BRANCH = self.history.pop()
+                self.selected_index = 0
+                self.reload_menu()        
+            else:
+                self.app.pop_screen()
+        else:
+            self.app.exit()
 
     def action_select(self) -> None:
         selected_item = self.tree_children[self.selected_index]
