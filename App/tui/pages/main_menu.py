@@ -17,59 +17,79 @@ class Main_menu(Screen):
         super().__init__()
         self.settings = SettingsConfig.get_config()
         self.selected_index = 0
-        self.options = [
-            "Connect to Dokkaebi",
-            "Local Tests",
-            "Settings",
-            "Sair"
+        
+        self.menu_items = [
+            {
+                "label": "Connect to Dokkaebi",
+                "title": "ONLINE Dokkaebi",
+                "description": (
+                    "Enters online mode if configured. \n" +
+                    "Provides a menu with all online capabilities"
+                ),
+                "options": "It only works in ONLINE mode",
+                "action": "online_dokka",
+            },
+            {
+                "label": "Local Tests",
+                "title": "Local testing",
+                "description": "Provides a menu with all offline actions.",
+                "options": "",
+                "action": "local_tests",
+            },
+            {
+                "label": "Settings",
+                "title": "Settings",
+                "description": "Provides a menu with all configs for Dokkaebi.",
+                "options": "",
+                "action": "settings",
+            },
+            {
+                "label": "Exit",
+                "title": "Exit",
+                "description": "Press ENTER to exit",
+                "options": "This action will leave the application",
+                "action": "exit",
+            }
         ]
     
     def compose(self) -> ComposeResult:
-        with Vertical(id="header-box"):
-            yield Static(f"DOKKAEBI::{self.__class__.__name__.replace('_', ' ').upper()} | Mode: Terminal | Status: {self.settings.connection.connection_type.value}", id="title")
-
-            with Horizontal(classes="menu"):
-                with Vertical(id="settings-menu"):
-                    for index, option in enumerate(self.options):
-                        yield Static(
-                            option,
-                            id=f"settings-option-{index}",
-                            classes="menu-option"
-                        )
-
-                yield Static("detalhes", id="settings-details")
-    
-    def update_menu(self) -> None:
-        for index, option in enumerate(self.options):
-            item = self.query_one(f"#settings-option-{index}", Static)
-
-            if index == self.selected_index:
-                item.update(f"> {option}")
-                item.add_class("selected")
-            else:
-                item.update(f"  {option}")
-                item.remove_class("selected")
-                
-    def on_mount(self) -> None:
-        self.update_menu()
+        yield TerminalMenu(
+            title=self.__class__.__name__,
+            items=self.menu_items,
+            selected_index=self.selected_index,
+            id="terminal-menu",
+        )
         
+    def update_menu(self) -> None:
+        menu = self.query_one("#terminal-menu", TerminalMenu)
+        menu.set_selected_index(self.selected_index)
+
     def action_move_up(self) -> None:
-        self.selected_index = (self.selected_index - 1) % len(self.options)
+        self.selected_index = (self.selected_index - 1) % len(self.menu_items)
         self.update_menu()
 
     def action_move_down(self) -> None:
-        self.selected_index = (self.selected_index + 1) % len(self.options)
+        self.selected_index = (self.selected_index + 1) % len(self.menu_items)
         self.update_menu()
 
     def action_select(self) -> None:
-        selected = self.options[self.selected_index]
+        selected_item = self.menu_items[self.selected_index]
 
-        match selected:
-            case "Connect to Dokkaebi":
-                self.app.push_screen("local_dokka")
-            case "Local Tests":
+        match selected_item["action"]:
+            case "online_dokka":
+                self.app.push_screen("online_dokka")
+                pass
+
+            case "local_tests":
                 self.app.push_screen("local_tests")
-            case "Settings":
+                pass
+
+            case "settings":
                 self.app.push_screen("settings")
-            case "Sair":
+                pass
+
+            case "return":
+                self.app.pop_screen()
+
+            case "exit":
                 self.app.exit()

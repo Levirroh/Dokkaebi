@@ -22,47 +22,86 @@ class Online_dokka(Screen):
             "Dashboard",
             "Return"
         ]
+        self.desc = [
+            {
+                "title": "Actions on online devices",
+                "description": (
+                    "In actions menu is possible to call\n"
+                    "functions and endpoints in other devices"
+                ),
+                "options": "It only works in ONLINE mode."
+            },
+            {
+                "title": "Dashboard",
+                "description": "Shows a list of all online devices and their stats.",
+                "options": "It only works in ONLINE mode."
+            },
+            {
+                "title": "Return",
+                "description": "Go back to the previous menu.",
+                "options": "Press ENTER to return."
+            }
+        ]
+        self.menu_items = [
+                {
+                    "label": "Actions",
+                    "title": "Actions on online devices",
+                    "description": (
+                        "In actions menu is possible to call\n"
+                        "functions and endpoints in other devices"
+                    ),
+                    "options": "It only works in ONLINE mode",
+                    "action": "",
+                },
+                {
+                    "label": "Dashboard",
+                    "title": "Dashboard",
+                    "description": "Shows a list of all online devices and their stats.",
+                    "options": "It only works in ONLINE mode",
+                    "action": "",
+                },
+                {
+                    "label": "Return",
+                    "title": "Return",
+                    "description": "Go back to the previous menu",
+                    "options": "Press ENTER to return",
+                    "action": "return",
+                }
+            ]
     
     def compose(self) -> ComposeResult:
-        with Vertical(id="header-box"):
-            yield Static(f"DOKKAEBI::{self.__class__.__name__.replace('_', ' ').upper()} | Mode: Terminal | Status: {self.settings.connection.connection_type.value}", id="title")
-
-            with Horizontal(classes="menu"):
-                with Vertical(id="settings-menu"):
-                    for index, option in enumerate(self.options):
-                        yield Static(
-                            option,
-                            id=f"settings-option-{index}",
-                            classes="menu-option"
-                        )
-
-                yield Static("detalhes", id="settings-details")
-    
-    def update_menu(self) -> None:
-        for index, option in enumerate(self.options):
-            item = self.query_one(f"#settings-option-{index}", Static)
-
-            if index == self.selected_index:
-                item.update(f"> {option}")
-                item.add_class("selected")
-            else:
-                item.update(f"  {option}")
-                item.remove_class("selected")
-                
-    def on_mount(self) -> None:
-        self.update_menu()
+        yield TerminalMenu(
+            title=self.__class__.__name__,
+            items=self.menu_items,
+            selected_index=self.selected_index,
+            id="terminal-menu",
+        )
         
+    def update_menu(self) -> None:
+        menu = self.query_one("#terminal-menu", TerminalMenu)
+        menu.set_selected_index(self.selected_index)
+
     def action_move_up(self) -> None:
-        self.selected_index = (self.selected_index - 1) % len(self.options)
+        self.selected_index = (self.selected_index - 1) % len(self.menu_items)
         self.update_menu()
 
     def action_move_down(self) -> None:
-        self.selected_index = (self.selected_index + 1) % len(self.options)
+        self.selected_index = (self.selected_index + 1) % len(self.menu_items)
         self.update_menu()
 
     def action_select(self) -> None:
-        selected = self.options[self.selected_index]
+        selected_item = self.menu_items[self.selected_index]
 
-        match selected:
-            case "Return":
+        match selected_item["action"]:
+            case "online_dokka":
+                pass
+
+            case "local_tests":
+                self.app.push_screen("local_tests")
+                pass
+
+            case "settings":
+                pass
+
+            case "return":
                 self.app.pop_screen()
