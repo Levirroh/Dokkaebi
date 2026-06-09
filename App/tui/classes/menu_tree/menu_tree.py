@@ -111,6 +111,16 @@ EXIT_NODE = {
     "action": "exit",
 }
 
+RETURN_NODE = {
+    "id": "return",
+    "label": "Return",
+    "type": "action",
+    "title": "Return",
+    "description": "Go back to previous menu.",
+    "options": "Press ENTER to return.",
+    "action": "return",
+}
+
 #endregion
 
 

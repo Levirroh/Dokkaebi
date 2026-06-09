@@ -1,10 +1,10 @@
 from textual.app import ComposeResult
 from textual.screen import Screen
-from textual.widgets import Rule, Static, Input, RichLog
-from textual.containers import Horizontal, Vertical
 
+from tui.classes.menu_tree.menu_tree import MAIN_TREE, RETURN_NODE
 import tui.classes.settings_config as SettingsConfig
 from tui.components.menu import TerminalMenu
+
 
 class Main_menu(Screen):
     BINDINGS = [
@@ -12,84 +12,74 @@ class Main_menu(Screen):
         ("down", "move_down", "Descer"),
         ("enter", "select", "Selecionar"),
     ]
-    
+
     def __init__(self):
         super().__init__()
         self.settings = SettingsConfig.get_config()
+
         self.selected_index = 0
-        
-        self.menu_items = [
-            {
-                "label": "Connect to Dokkaebi",
-                "title": "ONLINE Dokkaebi",
-                "description": (
-                    "Enters online mode if configured. \n" +
-                    "Provides a menu with all online capabilities"
-                ),
-                "options": "It only works in ONLINE mode",
-                "action": "online_dokka",
-            },
-            {
-                "label": "Local Tests",
-                "title": "Local testing",
-                "description": "Provides a menu with all offline actions.",
-                "options": "",
-                "action": "local_tests",
-            },
-            {
-                "label": "Settings",
-                "title": "Settings",
-                "description": "Provides a menu with all configs for Dokkaebi.",
-                "options": "",
-                "action": "settings",
-            },
-            {
-                "label": "Exit",
-                "title": "Exit",
-                "description": "Press ENTER to exit",
-                "options": "This action will leave the application",
-                "action": "exit",
-            }
-        ]
-    
+
+        self.history = []
+
+        self.TREE = MAIN_TREE
+        self.BRANCH = self.TREE
+        self.tree_children = self.BRANCH["children"]
+
     def compose(self) -> ComposeResult:
         yield TerminalMenu(
-            title=self.__class__.__name__,
-            items=self.menu_items,
+            title=self.BRANCH["title"],
+            items=self.tree_children,
             selected_index=self.selected_index,
             id="terminal-menu",
         )
-        
-    def update_menu(self) -> None:
+
+    def update_menu_selection(self) -> None:
         menu = self.query_one("#terminal-menu", TerminalMenu)
         menu.set_selected_index(self.selected_index)
 
+    def reload_menu(self) -> None:
+        menu = self.query_one("#terminal-menu", TerminalMenu)
+
+        if self.BRANCH["id"] != "main":
+            self.tree_children = self.BRANCH["children"] + [RETURN_NODE]
+        else:
+            self.tree_children = self.BRANCH["children"]
+
+        menu.title = self.BRANCH["title"]
+        menu.items = self.tree_children
+
+        menu.set_selected_index(self.selected_index)
+        menu.refresh(recompose=True)
+
     def action_move_up(self) -> None:
-        self.selected_index = (self.selected_index - 1) % len(self.menu_items)
-        self.update_menu()
+        self.selected_index = (self.selected_index - 1) % len(self.tree_children)
+        self.update_menu_selection()
 
     def action_move_down(self) -> None:
-        self.selected_index = (self.selected_index + 1) % len(self.menu_items)
-        self.update_menu()
+        self.selected_index = (self.selected_index + 1) % len(self.tree_children)
+        self.update_menu_selection()
 
     def action_select(self) -> None:
-        selected_item = self.menu_items[self.selected_index]
+        selected_item = self.tree_children[self.selected_index]
+        selected_type = selected_item["type"]
 
-        match selected_item["action"]:
-            case "online_dokka":
-                self.app.push_screen("online_dokka")
-                pass
+        if selected_type == "folder":
+            self.history.append(self.BRANCH)
+            self.BRANCH = selected_item
+            self.tree_children = self.BRANCH["children"]
+            self.selected_index = 0
+            self.reload_menu()
 
-            case "local_tests":
-                self.app.push_screen("local_tests")
-                pass
+        elif selected_type == "screen":
+            self.app.push_screen(selected_item["screen"])
 
-            case "settings":
-                self.app.push_screen("settings")
-                pass
+        elif selected_type == "action":
+            if selected_item["action"] == "return":
+                if self.history:
+                    self.BRANCH = self.history.pop()
+                    self.selected_index = 0
+                    self.reload_menu()
 
-            case "return":
-                self.app.pop_screen()
-
-            case "exit":
+            elif selected_item["action"] == "exit":
                 self.app.exit()
+                    
