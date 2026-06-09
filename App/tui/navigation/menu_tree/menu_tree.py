@@ -1,5 +1,19 @@
 #region online Dokka
 
+ONLINE_ACTIONS_PING = {
+    "id": "online_actions_ping",
+    "label": "Ping",
+    "type": "action",
+    "title": "Ping",
+    "description": "Pings a device by entering their IP.",
+    "requires": ["online", "Dokka VPN"],
+    "action": "backend_request",
+    "payload": {
+        "method": "GET",
+        "url": "/agent/ping/:ip"
+    }
+}
+
 ONLINE_ACTIONS_TREE = {
     "id": "online_actions",
     "label": "Actions",
@@ -7,7 +21,7 @@ ONLINE_ACTIONS_TREE = {
     "title": "Actions",
     "description": "Execute commands on online devices.",
     "requires": ["online"],
-    "children": [],
+    "children": [ONLINE_ACTIONS_PING],
 }
 
 
