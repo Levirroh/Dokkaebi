@@ -4,68 +4,118 @@
 }
 
 Input {
-    border: none;
+  border: none;
 }
 
 Rule {
-    height: 1;
-    margin: 0;
-    padding: 0;
+  height: 1;
+  margin: 0;
+  padding: 0;
 }
 
 #prompt-line {
-    height: 1;
-    width: 100%;
+  height: 1;
+  width: 100%;
 }
 
 #prompt {
-    width: 10;
+  width: 10;
 }
 
 #command-input {
-    width: 1fr;
+  width: 1fr;
 }
 
 .separator {
-    height: 1;
-    margin: 0;
-    padding: 0;
-    color: white;
+  height: 1;
+  margin: 0;
+  padding: 0;
+  color: white;
 }
 
+#terminal-menu {
+  width: 80;
+  height: auto;
+  border: double gray;
+  padding: 0;
+}
+
+#title {
+  width: 100%;
+  height: auto;
+  min-height: 1;
+  padding: 0 1;
+  border-bottom: double gray;
+}
+
+.menu {
+  width: 100%;
+  height: auto;
+  min-height: 10;
+}
+
+#menu-options {
+  width: 26;
+  height: auto;
+  border-right: double gray;
+  padding-right: 2;
+}
+
+.menu-option {
+  width: 100%;
+  height: 1;
+  padding: 0 1;
+}
+
+.menu-option.selected,
 .selected {
   width: 100%;
   background: aqua;
   color: black;
 }
 
-#header-box {
-    width: 80;
-    height: auto;
-    border: double gray;
-    padding: 0;
+#menu-description {
+  width: 1fr;
+  height: auto;
+  padding-left: 2;
 }
 
-#menu {
-  width: 100%;
-  height: 10;
-  border-top: double gray;
+#settings-details-title {
+  height: auto;
+  text-style: bold;
+  padding: 0 1 1 1;
+}
+
+#settings-details-desc {
+  height: auto;
+  padding: 0 1;
+}
+
+#settings-details-options {
+  height: auto;
+  padding: 0 1;
+  color: aliceblue;
+  text-style: italic;
+}
+
+
+#settings-screen-box {
+  width: 80;
+  height: auto;
+  min-height: 12;
+  border: double gray;
+  padding: 0;
 }
 
 #settings-menu {
-    width: 24;
-    height: auto;
-    border-right: double gray;
-    padding-right: 2;
+  width: 24;
+  height: auto;
+  border-right: double gray;
+  padding-right: 2;
 }
 
 #settings-details {
-    width: 1fr;
-    height: auto;
-    padding-left: 2;
-}
-
-#title {
-  padding: 0 1;
-  border-bottom: double gray;
+  width: 1fr;
+  height: auto;
+  padding-left: 2;
 }

@@ -12,7 +12,7 @@ class Dokkaebi_client(App):
 
     SCREENS = {
         "main_menu": Main_menu,
-        "local_dokka": Online_dokka,
+        "online_dokka": Online_dokka,
         "setup": Environment_setup,
         "local_tests": Local_tests,
         "settings": Settings,
