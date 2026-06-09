@@ -33,6 +33,8 @@ class Main_menu(Screen):
             title=self.BRANCH["title"],
             items=self.tree_children,
             selected_index=self.selected_index,
+            branch=self.BRANCH,
+            history=self.history,
             id="terminal-menu",
         )
 
@@ -48,8 +50,10 @@ class Main_menu(Screen):
         else:
             self.tree_children = self.BRANCH["children"]
 
-        menu.title = self.BRANCH["title"]
+        menu.title_text = self.BRANCH["title"]
         menu.items = self.tree_children
+        menu.branch = self.BRANCH
+        menu.history = self.history.copy()
 
         menu.set_selected_index(self.selected_index)
         menu.refresh(recompose=True)
