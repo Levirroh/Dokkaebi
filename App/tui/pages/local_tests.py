@@ -21,7 +21,7 @@ class Local_tests(Screen):
         self.menu_items = [
             {
                 "label": "Link Dokka",
-                "title": "Connect a offline device",
+                "title": "Connect a new device",
                 "description": (
                     "Tries connection with a device in the same network"
                 ),
