@@ -1,12 +1,12 @@
-from fastapi import FastAPI
+from fastapi import APIRouter, FastAPI
+
+from routers import dokka
 
 app = FastAPI()
 
+app.include_router(dokka.router)
+
+
 @app.get("/{teste}")
 async def read_item(teste):
-    return {"item_id": teste}
-
-
-@app.get("/items/{item_id}")
-async def read_item(item_id):
-    return {"item_id": item_id}
+    return {"item_id": teste}  
