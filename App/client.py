@@ -6,5 +6,3 @@ if __name__ == "__main__":
     Dokkaebi_client().run()
     
     
-    
-#CMC0ncept@150710
