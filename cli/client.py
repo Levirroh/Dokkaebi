@@ -1,5 +1,5 @@
 from helpers import screen_helper
-from tui.pages.dokkaebi_client import Dokkaebi_client
+from src.pages.dokkaebi_client import Dokkaebi_client
 
 if __name__ == "__main__":
     screen_helper.cls()

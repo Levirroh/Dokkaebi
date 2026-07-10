@@ -2,7 +2,7 @@ from textual.app import ComposeResult
 from textual.widget import Widget
 from textual.widgets import Static
 
-import tui.classes.settings_config as SettingsConfig
+import src.classes.settings_config as SettingsConfig
 
 
 class MenuHeader(Static):

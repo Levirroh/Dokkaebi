@@ -1,8 +1,8 @@
 from textual.app import App, ComposeResult
 
-from tui.pages.settings import Settings
-from tui.pages.main_menu import Main_menu
-from tui.pages.setup import Environment_setup
+from src.pages.settings import Settings
+from src.pages.main_menu import Main_menu
+from src.pages.setup import Environment_setup
 
 
 class Dokkaebi_client(App):

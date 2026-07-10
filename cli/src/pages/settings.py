@@ -3,8 +3,8 @@ from textual.screen import Screen
 from textual.widgets import Static
 from textual.containers import Horizontal, Vertical
 
-import tui.classes.settings_config as SettingsConfig
-from tui.components.menu_header import MenuHeader
+import src.classes.settings_config as SettingsConfig
+from src.components.menu_header import MenuHeader
 
 
 class Settings(Screen):

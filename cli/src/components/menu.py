@@ -2,9 +2,9 @@ from textual.app import ComposeResult
 from textual.containers import Horizontal, Vertical
 from textual.widgets import Static
 
-from tui.components.menu_header import MenuHeader
-from tui.components.menu_options import MenuOptions
-from tui.components.menu_description import MenuDescription
+from src.components.menu_header import MenuHeader
+from src.components.menu_options import MenuOptions
+from src.components.menu_description import MenuDescription
 
 
 class TerminalMenu(Vertical):

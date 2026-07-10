@@ -1,10 +1,10 @@
 from textual.app import ComposeResult
 from textual.screen import Screen
 
-from tui.navigation.action_handler import ActionHandler
-from tui.navigation.menu_tree.menu_tree import MAIN_TREE, RETURN_NODE
-import tui.classes.settings_config as SettingsConfig
-from tui.components.menu import TerminalMenu
+from src.navigation.action_handler import ActionHandler
+from src.navigation.menu_tree.menu_tree import MAIN_TREE, RETURN_NODE
+import src.classes.settings_config as SettingsConfig
+from src.components.menu import TerminalMenu
 
 
 class Main_menu(Screen):
