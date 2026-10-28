@@ -24,7 +24,7 @@ class _InputComponentState extends State<InputComponent> {
     return TextFormField(
       obscureText: _hideText,
       decoration: InputDecoration(
-        labelText: 'Password',
+        labelText: widget.label,
         suffixIcon: widget.showHideText
             ? IconButton(
                 icon: Icon(_hideText ? Icons.visibility : Icons.visibility_off),

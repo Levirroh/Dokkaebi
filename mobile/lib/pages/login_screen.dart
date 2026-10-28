@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mobile/components/button_component.dart';
 import 'package:mobile/components/input_component.dart';
+import 'package:mobile/pages/home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -9,21 +11,40 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  late String username;
-  late String password;
+  String username = "";
+  String password = "";
+
+  void login() {
+    if (username == "" || password == "") {
+      // mensagem de erro
+    }
+
+    if (username == "admin" && password == "admin") {
+      Navigator.of(context).push(
+        MaterialPageRoute<void>(builder: (context) => const HomeScreen()),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          InputComponent(label: "User", onChange: (value) => username = value),
-          InputComponent(
-            label: "Password",
-            onChange: (value) => password = value,
-          ),
-          Text("entrar"),
-        ],
+      body: Container(
+        padding: EdgeInsets.all(8),
+        alignment: AlignmentGeometry.center,
+        child: Column(
+          children: [
+            InputComponent(
+              label: "username",
+              onChange: (value) => username = value,
+            ),
+            InputComponent(
+              label: "password",
+              onChange: (value) => password = value,
+            ),
+            ButtonComponent(text: "Login", onPressed: login),
+          ],
+        ),
       ),
     );
   }
