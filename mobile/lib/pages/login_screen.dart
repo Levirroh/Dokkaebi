@@ -20,31 +20,39 @@ class _LoginScreenState extends State<LoginScreen> {
     }
 
     if (username == "admin" && password == "admin") {
-      Navigator.of(context).push(
-        MaterialPageRoute<void>(builder: (context) => const HomeScreen()),
-      );
+      Navigator.of(
+        context,
+      ).push(MaterialPageRoute<void>(builder: (context) => const HomeScreen()));
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        padding: EdgeInsets.all(8),
-        alignment: AlignmentGeometry.center,
-        child: Column(
-          children: [
-            InputComponent(
-              label: "username",
-              onChange: (value) => username = value,
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center, // Centraliza verticalmente
+        crossAxisAlignment:
+            CrossAxisAlignment.center, // Centraliza horizontalmente
+        children: [
+          Container(
+            padding: EdgeInsets.all(8),
+            child: Column(
+              spacing: 15,
+              children: [
+                InputComponent(
+                  label: "username",
+                  onChange: (value) => username = value,
+                ),
+                InputComponent(
+                  label: "password",
+                  onChange: (value) => password = value,
+                ),
+                SizedBox(height: 10),
+                ButtonComponent(text: "Login", onPressed: login),
+              ],
             ),
-            InputComponent(
-              label: "password",
-              onChange: (value) => password = value,
-            ),
-            ButtonComponent(text: "Login", onPressed: login),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

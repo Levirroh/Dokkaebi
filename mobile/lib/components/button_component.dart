@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile/styles/colors.dart';
 
 class ButtonComponent extends StatefulWidget {
   const ButtonComponent({
@@ -19,6 +20,17 @@ class ButtonComponent extends StatefulWidget {
 class _ButtonComponentState extends State<ButtonComponent> {
   @override
   Widget build(BuildContext context) {
-    return TextButton(onPressed: widget.onPressed, child: Text(widget.text));
+    return TextButton(
+      style: TextButton.styleFrom(
+        backgroundColor: AppColors.pink,
+        alignment: Alignment.center,
+        foregroundColor: AppColors.background,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12.0), // Adjust radius value here
+        ),
+      ),
+      onPressed: widget.onPressed,
+      child: Text(widget.text),
+    );
   }
 }
